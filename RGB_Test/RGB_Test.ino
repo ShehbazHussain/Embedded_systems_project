@@ -1,7 +1,7 @@
 
- int redPin = 30;
-int greenPin = 32;
-int bluePin = 34;
+int redPin = 12;
+int greenPin = 11;
+int bluePin = 10;
  
 //uncomment this line if using a Common Anode LED
 //#define COMMON_ANODE
@@ -16,17 +16,17 @@ void setup()
 void loop()
 {
   setColor(255, 0, 0);  // red
-  delay(1000);
+  delay(100);
   setColor(0, 255, 0);  // green
-  delay(1000);
+  delay(100);
   setColor(0, 0, 255);  // blue
-  delay(1000);
+  delay(100);
   setColor(255, 255, 0);  // yellow
-  delay(1000);  
+  delay(100);  
   setColor(80, 0, 80);  // purple
-  delay(1000);
+  delay(100);
   setColor(0, 255, 255);  // aqua
-  delay(1000);
+  delay(100);
 }
  
 void setColor(int red, int green, int blue)
