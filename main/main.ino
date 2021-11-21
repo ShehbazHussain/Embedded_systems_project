@@ -32,6 +32,10 @@ int IR_Sensor_Distance;
 int ultrasonic_distance;
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance
 
+// Christmas Lights
+#define RED_LIGHT 31
+#define GREEN_LIGHT 33
+
 
 // Buzzer Pins
 #define buzzer 2 
@@ -80,6 +84,9 @@ void setup()
   pinMode(blue_pin_rgb_2, OUTPUT);  
   pinMode(buzzer,OUTPUT);
   pinMode(buttonPin, INPUT);
+  pinMode(RED_LIGHT, OUTPUT);
+  pinMode(GREEN_LIGHT, OUTPUT);
+
 
   // RFID Stuff
   SPI.begin();      // Init SPI bus
@@ -97,6 +104,7 @@ void loop()
   RFID();
   keypad_dial();
   button();
+  ChristmasLights();
 }
 void buzzer_activate(){
   digitalWrite(buzzer, HIGH); // produce sound
@@ -244,3 +252,8 @@ void RFID(){
     Serial.println();
   }
   }
+
+void ChristmasLights(){
+  digitalWrite(RED_LIGHT, HIGH);
+  digitalWrite(GREEN_LIGHT, HIGH);
+}
