@@ -8,6 +8,13 @@
 int close_pos=180;
 int open_pos=90 ;
 
+// IR pins
+
+#define Analog_Pin_IR_Sensor A0 // IR Sensor
+#define GPIOL 45
+int IR_Sensor_Value;
+int IR_Sensor_Distance;
+
 // RGB_1 pins
 #define red_pin_rgb_1 12
 #define green_pin_rgb_1 11
@@ -81,15 +88,35 @@ void setup()
   servo1.write(0);
   mfrc522.PCD_DumpVersionToSerial();  // Show details of PCD - MFRC522 Card Reader details
   Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
-
 }
  
 void loop()
 {
   ultrasonic_reading();
+  IR_Sensor();
   RFID();
   keypad_dial();
   button();
+}
+void buzzer_activate(){
+  digitalWrite(buzzer, HIGH); // produce sound
+}
+
+void buzzer_deactivate(){
+  digitalWrite(buzzer, LOW); // produce sound
+}
+
+void IR_Sensor(){
+  IR_Sensor_Value = analogRead(Analog_Pin_IR_Sensor);
+  IR_Sensor_Distance = -0.1005*(IR_Sensor_Value) + 50;// read the input pin
+  Serial.println(IR_Sensor_Distance);
+  if (IR_Sensor_Distance < 7){
+    servo1.write(close_pos);
+    buzzer_activate();
+    }
+  else{
+    buzzer_deactivate();    
+    }  
 }
  
 void setColor_rgb1(int red, int green, int blue)
@@ -119,6 +146,7 @@ void setColor_rgb2(int red, int green, int blue)
 
 void button(){
   buttonState = digitalRead(buttonPin);
+  Serial.println(buttonState);
   if (buttonState == true){
     button_counter++;
     if ( (button_counter % 2) != 0) {
